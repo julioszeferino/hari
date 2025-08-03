@@ -1,14 +1,19 @@
+import os
+
 from rich.console import Console
 from rich.table import Table
 from typer import Argument, Typer
 
+from hari.cli.contrato_dados import cria_estrutura_contrato
 from hari.cli.projeto import cria_estrutura_projeto
 
 console = Console()
 app = Typer()
 __app_projeto = Typer()
+__app_contrato = Typer()
 
 app.add_typer(__app_projeto, name='projeto', help='Gerencia projetos Hari')
+app.add_typer(__app_contrato, name='contrato', help='Gerencia contratos Hari')
 
 
 @__app_projeto.command('novo')
@@ -53,6 +58,21 @@ def app_cria_estrutura_projeto(
 
     except Exception as e:
         console.print(f'[red]Erro ao criar estrutura do projeto: {e}[/red]')
+
+
+@__app_contrato.command('novo')
+def app_cria_estrutura_contrato(
+    nome_projeto: str = Argument(
+        '.', help='Nome do projeto para o qual o contrato será criado.'
+    )
+):
+    if nome_projeto == '.':
+        nome_projeto = os.chdir(nome_projeto)
+
+    cria_estrutura_contrato(
+        console=console,
+        nome_projeto=nome_projeto,
+    )
 
 
 if __name__ == '__main__':  # pragma: no cover
