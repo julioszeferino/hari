@@ -36,7 +36,7 @@ mkdocs-macros-plugin = "^1.3.7"
 
 [tool.pytest.ini_options]
 pythonpath = "."
-addopts = "--doctest-modules"
+addopts = "--doctest-modules --ignore=hari/cli/templates"
 
 [tool.isort]
 profile = "black"

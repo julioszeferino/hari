@@ -2,6 +2,8 @@
 # Hari
 Hari é uma biblioteca Python que auxilia na automação de diversas tarefas comuns de engenharia de dados em ambientes PySpark. A biblioteca possui funções relacionadas à ingestão, carga, gerenciamento e qualidade de dados em ambientes de data lakehouse com PySpark, e propõe um modelo de desenvolvimento baseado em padrões de codificação e contratos de dados.
 
+Possui dois comandos básicos `projeto` e `contrato`
+
 ## Como criar um novo projeto Hari?
 Você pode criar um novo projeto via linha de comando. Por exemplo: 
 ```bash

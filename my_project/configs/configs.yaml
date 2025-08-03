@@ -1,0 +1,22 @@
+# This is a config file template for the Hari CLI project.
+version: "1.0"
+job_name: ""
+job_description: ""
+job_type: "batch"  # Options: 'batch', 'streaming'
+job_priority: "normal"  # Options: 'low', 'normal', 'high'
+job_timeout: 3600  # Timeout in seconds
+job_retry_limit: 3  # Number of retries on failure
+job_resources:
+  cpu: 2  # Number of CPU cores
+  memory: "4GB"  # Memory allocation
+logging_level: "INFO"  # Options: 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'
+input_datasets:
+  - dataset_name: ""
+    dataset_path: ""  # e.g. s3_path, local_path, catalog_uri
+    dataset_format: "parquet"  # e.g. 'parquet', 'json', 'csv'
+output_datasets:
+  - dataset_name: ""
+    dataset_path: ""  # e.g. s3_path, local_path, catalog_uri
+    dataset_format: "parquet"  # e.g. 'parquet', 'json', 'csv'
+    partition_by: []  # e.g. ['year', 'month']
+    load_strategy: "overwrite"  # Options: 'append', 'overwrite', 'upsert'
