@@ -1,6 +1,8 @@
 import os
 from typing import Dict, List
 
+from hari import __version__
+
 DIRECTORIES_FILES = {
     'configs': ['configs.yaml'],
     'utils': ['helpers.py', 'validators.py'],
@@ -45,8 +47,6 @@ def project(project_name: str) -> Dict[str, List[str]]:
     dirs_created: List[str] = []
     files_created: List[str] = []
 
-    print('Dir atual:', os.getcwd())
-
     try:
         for dir, files in DIRECTORIES_FILES.items():
             if dir != '.':
@@ -65,6 +65,12 @@ def project(project_name: str) -> Dict[str, List[str]]:
                 with open(file_path, 'w') as new_file:
                     new_file.write(content)
                 files_created.append(file_path)
+
+        # create a hari.lock file
+        lock_file_path = os.path.join(project_name, 'hari.lock')
+        with open(lock_file_path, 'w') as lock_file:
+            lock_file.write(f'Hari project: {project_name}\n')
+            lock_file.write(f'Created with Hari CLI version: {__version__}\n')
 
         return {'dirs_created': dirs_created, 'files_created': files_created}
 

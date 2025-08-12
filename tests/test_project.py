@@ -1,7 +1,5 @@
 import os
 import shutil
-import tempfile
-from typing import Dict, List
 
 import pytest
 
@@ -11,85 +9,107 @@ from hari.cli.commands.project import (
 )
 
 
-class TestProject:
-    @pytest.fixture
-    def temp_dir(self, tmp_path):
-        tmp_path = tempfile.mkdtemp()
-        original_path = os.getcwd()
-        templates_dir = os.path.join(tmp_path, 'templates')
-        shutil.copytree(TEMPLATES_DIR, templates_dir)
-        os.chdir(tmp_path)
-        yield tmp_path, templates_dir
-        os.chdir(original_path)
-        shutil.rmtree(tmp_path)
+def _generic_exception(*args, **kwargs):
+    """
+    Mock function to raise a generic exception.
+    """
+    raise Exception('Generic error')
 
-    def test_output_project_structure(self, temp_dir, monkeypatch):
-        # Given
-        tmp_path, templates_dir = temp_dir
-        monkeypatch.setattr(
-            'hari.cli.commands.project.TEMPLATES_DIR', templates_dir
-        )
-        project_name = 'project_test'
-        expected_result = {
-            'dirs_created': [
-                f'{project_name}/configs',
-                f'{project_name}/utils',
-            ],
-            'files_created': [
-                f'{project_name}/configs/configs.yaml',
-                f'{project_name}/utils/helpers.py',
-                f'{project_name}/utils/validators.py',
-                f'{project_name}/job.py',
-                f'{project_name}/README.md',
-            ],
-        }
-        # When
-        result: Dict[str, List[str]] = project(project_name)
 
-        # Then
-        assert result == expected_result
+@pytest.fixture(scope='session')
+def tmp_dir_shared(tmp_path_factory):
+    """
+    Create a temp dir that can be shared across tests.
+    """
+    original_templates_dir = TEMPLATES_DIR
+    tmp_dir = tmp_path_factory.mktemp('tmp', numbered=True)
+    tmp_templates_dir = tmp_dir / 'templates'
+    shutil.copytree(original_templates_dir, tmp_templates_dir)
+    return str(tmp_dir)
 
-    def test_file_not_found(self, temp_dir):
-        # Given
-        project_name = 'project_test'
-        monkeypatch = pytest.MonkeyPatch()
-        monkeypatch.setattr(
-            'hari.cli.commands.project.TEMPLATES_DIR', 'non_existent_dir'
-        )
 
-        # When / Then
-        with pytest.raises(FileNotFoundError):
-            project(project_name)
+def test_project_structure(tmp_dir_shared, monkeypatch):
+    # ---- Arrange ----
+    # change the workdir
+    os.chdir(tmp_dir_shared)
+    # change the TEMPLATES_DIR variable
+    monkeypatch.setattr(
+        'hari.cli.commands.project.TEMPLATES_DIR',
+        f'{tmp_dir_shared}/templates',
+    )
+    project_name = 'test_project'
+    dirs_expected = [
+        f'{project_name}/configs',
+        f'{project_name}/utils',
+    ]
+    files_expected = [
+        f'{project_name}/configs/configs.yaml',
+        f'{project_name}/utils/helpers.py',
+        f'{project_name}/utils/validators.py',
+        f'{project_name}/job.py',
+        f'{project_name}/README.md',
+    ]
+    # ---- Act ----
+    result = project(project_name)
+    # ---- Assert ----
+    assert result['dirs_created'] == dirs_expected
+    assert result['files_created'] == files_expected
 
-    def test_permission_error(self, temp_dir):
-        # Given
-        project_name = 'project_test'
-        monkeypatch = pytest.MonkeyPatch()
-        monkeypatch.setattr(
-            'hari.cli.commands.project.TEMPLATES_DIR', temp_dir[1]
-        )
-        # Simulate permission error by trying to create a file in a
-        # read-only directory
-        os.chmod(temp_dir[0], 0o400)
 
-        # When / Then
-        with pytest.raises(PermissionError):
-            project(project_name)
-        # Restore permissions so fixture teardown can clean up
-        os.chmod(temp_dir[0], 0o700)
+def test_file_not_found_error(tmp_dir_shared, monkeypatch):
+    # ---- Arrange ----
+    # change the workdir
+    os.chdir(tmp_dir_shared)
+    # change the TEMPLATES_DIR variable to a non-existent dir
+    monkeypatch.setattr(
+        'hari.cli.commands.project.TEMPLATES_DIR',
+        f'{tmp_dir_shared}/non_existent_dir',
+    )
+    project_name = 'test_project'
 
-    def test_generic_exception(self, temp_dir):
-        # Given
-        project_name = 'project_test'
-        monkeypatch = pytest.MonkeyPatch()
-        monkeypatch.setattr(
-            'hari.cli.commands.project.TEMPLATES_DIR', temp_dir[1]
-        )
-        # Simulate a generic exception by raising an exception in the
-        # project function
-        monkeypatch.setattr('os.makedirs', lambda *args, **kwargs: 1 / 0)
+    # ---- Act / Assert ----
+    with pytest.raises(FileNotFoundError):
+        project(project_name)
 
-        # When / Then
-        with pytest.raises(Exception) as excinfo:
-            project(project_name)
-        assert 'division by zero' in str(excinfo.value)
+
+def test_permission_error(tmp_dir_shared, monkeypatch):
+    # ---- Arrange ----
+    # change the workdir
+    os.chdir(tmp_dir_shared)
+    # change the TEMPLATES_DIR variable
+    monkeypatch.setattr(
+        'hari.cli.commands.project.TEMPLATES_DIR',
+        f'{tmp_dir_shared}/templates',
+    )
+    project_name = 'test_project'
+    # Change permissions to read-only
+    os.chmod(tmp_dir_shared, 0o400)
+
+    # ---- Act / Assert ----
+    with pytest.raises(PermissionError):
+        project(project_name)
+
+    # Restore permissions
+    os.chmod(tmp_dir_shared, 0o700)
+
+
+def test_generic_error(tmp_dir_shared, monkeypatch):
+    # ---- Arrange ----
+    # change the workdir
+    os.chdir(tmp_dir_shared)
+    # change the TEMPLATES_DIR variable
+    monkeypatch.setattr(
+        'hari.cli.commands.project.TEMPLATES_DIR',
+        f'{tmp_dir_shared}/templates',
+    )
+    project_name = 'test_project'
+    # change a function os.path.join in the module
+    # project() to raise a generic exception
+    monkeypatch.setattr(
+        'hari.cli.commands.project.os.path.join',
+        _generic_exception,
+    )
+    # ---- Act / Assert ----
+    with pytest.raises(Exception) as exc_info:
+        project(project_name)
+    assert 'Generic error' in str(exc_info.value)
