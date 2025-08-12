@@ -1,119 +1,119 @@
-![logo_do_projeto](assets/logo.png){ width="300" .center }
+![project_logo](assets/logo.png){ width="300" .center }
 # Hari
-Hari é uma biblioteca Python que auxilia na automação de diversas tarefas comuns de engenharia de dados em ambientes PySpark. A biblioteca possui funções relacionadas à ingestão, carga, gerenciamento e qualidade de dados em ambientes de data lakehouse com PySpark, e propõe um modelo de desenvolvimento baseado em padrões de codificação e contratos de dados.
+Hari is a Python library that helps automate several common data engineering tasks in PySpark environments. The library provides functions related to ingestion, loading, management, and data quality in data lakehouse environments with PySpark, and proposes a development model based on coding standards and data contracts.
 
-Possui dois comandos básicos `projeto` e `contrato`
+It has two basic commands: `project` and `contract`
 
-## Como criar um novo projeto Hari?
-Você pode criar um novo projeto via linha de comando. Por exemplo: 
+## How to create a new Hari project?
+You can create a new project via the command line. For example:
 ```bash
-poetry run hari projeto novo nome_do_projeto
+poetry run hari project new project_name
 ```
-Retornando uma lista com os diretórios e arquivos que foram criados.
+Returning a list with the directories and files that were created.
 
 ```
-           Diretorios e Arquivos Criados            
+           Created Directories and Files            
 ┏━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Tipo      ┃ Nome                                 ┃
+┃ Type      ┃ Name                                 ┃
 ┡━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ Diretorio │ nome_do_projeto/configs              │
-│ Diretorio │ nome_do_projeto/utils                │
-│ Arquivo   │ nome_do_projeto/configs/configs.json │
-│ Arquivo   │ nome_do_projeto/utils/helpers.py     │
-│ Arquivo   │ nome_do_projeto/utils/validators.py  │
-│ Arquivo   │ nome_do_projeto/job.py               │
-│ Arquivo   │ nome_do_projeto/README.md            │
+│ Directory │ project_name/configs                 │
+│ Directory │ project_name/utils                   │
+│ File      │ project_name/configs/configs.json    │
+│ File      │ project_name/utils/helpers.py        │
+│ File      │ project_name/utils/validators.py     │
+│ File      │ project_name/job.py                  │
+│ File      │ project_name/README.md               │
 └───────────┴──────────────────────────────────────┘
-Projeto "nome_do_projeto" criado com sucesso!
-Bons Codigos!
+Project "project_name" created successfully!
+Happy Coding!
 ```
-## Como criar um novo Contrato de Dados?
-Os contratos de dados são uma das principais funcionalidades da biblioteca Hari. Você pode criar um novo contrato via linha de comando. Por exemplo:
+## How to create a new Data Contract?
+Data contracts are one of the main features of the Hari library. You can create a new contract via the command line. For example:
 ```bash
-poetry run hari contrato novo nome_do_projeto
+poetry run hari contract new project_name
 ```
-Retornando uma série de questionamentos sobre o contrato de dados que será criado.
+Returning a series of questions about the data contract to be created.
 ```bash
-Informe os dados do contrato:
-Descricao do contrato (digite enter para pular) []: Meu Contrato Exemplo
-Nome da tabela de saida (ex: uri_catalogo, nome_arquivo): catalogo.schema.nome_tabela_saida
-Formato da tabela de saida (ex: parquet, csv): delta
-Deseja adicionar uma coluna a tabela catalogo.schema.nome_tabela_saida? [Y/n]: Y
-Nome da coluna: coluna1
-Tipo da coluna (ex: string, int, double): string
-A coluna pode ser nula? [Y/n]: n
-Os dados da coluna sao unicos? [y/N]: y
-Deseja adicionar uma coluna a tabela catalogo.schema.nome_tabela_saida? [y/N]: y
-Nome da coluna: coluna2
-Tipo da coluna (ex: string, int, double): int
-A coluna pode ser nula? [Y/n]: n
-Os dados da coluna sao unicos? [y/N]: n
-Deseja adicionar uma coluna a tabela catalogo.schema.nome_tabela_saida? [y/N]: y
-Nome da coluna: coluna3
-Tipo da coluna (ex: string, int, double): double
-Tamanho da coluna (ex: 10, 20) ou digite enter para pular: 10, 15
-A coluna pode ser nula? [Y/n]: y
-Os dados da coluna sao unicos? [y/N]: n
-Deseja adicionar uma coluna a tabela catalogo.schema.nome_tabela_saida? [y/N]: y
-Nome da coluna: coluna 3
-Tipo da coluna (ex: string, int, double): date
-A coluna pode ser nula? [Y/n]: n
-Os dados da coluna sao unicos? [y/N]: n
-Deseja adicionar uma coluna a tabela catalogo.schema.nome_tabela_saida? [y/N]: n
-Deseja adicionar colunas de particao? [y/N]: y
-Escolha uma coluna para particao (ou pressione Enter para finalizar) [coluna1/coluna2/coluna3/coluna 3] (): coluna2
-Coluna 'coluna2' add como particao.
-Deseja adicionar outra coluna de particao? [y/N]: n
-Colunas selecionadas: coluna2
-Email do owner do contrato (digite enter para pular) []: meu@email.com.br
-Deseja adicionar SLA ao contrato? [y/N]: y
-Frequencia de atualizacao (ex: diaria, semanal, mensal): diaria
-Tolerancia do SLA (ex: 1 hora, 30 minutos): 1 hora
-Processando contrato:
-Salvando contrato:
+Enter contract data:
+Contract description (press enter to skip) []: My Example Contract
+Output table name (e.g.: uri_catalog, file_name): catalog.schema.output_table_name
+Output table format (e.g.: parquet, csv): delta
+Do you want to add a column to table catalog.schema.output_table_name? [Y/n]: Y
+Column name: column1
+Column type (e.g.: string, int, double): string
+Can the column be null? [Y/n]: n
+Are the column values unique? [y/N]: y
+Do you want to add a column to table catalog.schema.output_table_name? [y/N]: y
+Column name: column2
+Column type (e.g.: string, int, double): int
+Can the column be null? [Y/n]: n
+Are the column values unique? [y/N]: n
+Do you want to add a column to table catalog.schema.output_table_name? [y/N]: y
+Column name: column3
+Column type (e.g.: string, int, double): double
+Column size (e.g.: 10, 20) or press enter to skip: 10, 15
+Can the column be null? [Y/n]: y
+Are the column values unique? [y/N]: n
+Do you want to add a column to table catalog.schema.output_table_name? [y/N]: y
+Column name: column 3
+Column type (e.g.: string, int, double): date
+Can the column be null? [Y/n]: n
+Are the column values unique? [y/N]: n
+Do you want to add a column to table catalog.schema.output_table_name? [y/N]: n
+Do you want to add partition columns? [y/N]: y
+Choose a column for partitioning (or press Enter to finish) [column1/column2/column3/column 3] (): column2
+Column 'column2' added as partition.
+Do you want to add another partition column? [y/N]: n
+Selected columns: column2
+Contract owner email (press enter to skip) []: my@email.com
+Do you want to add SLA to the contract? [y/N]: y
+Update frequency (e.g.: daily, weekly, monthly): daily
+SLA tolerance (e.g.: 1 hour, 30 minutes): 1 hour
+Processing contract:
+Saving contract:
 ```
-Por fim, será criado um arquivo com o modelo abaixo:
+Finally, a file will be created with the following model:
 ```yaml
-versao: 1.0.0
-data_criacao: '2025-08-03 14:42:40'
-nome: nome_do_projeto
-descricao: Meu Contrato Exemplo
-owner_email: meu@email.com.br
-tabela_saida:
-  nome: catalogo.schema.nome_tabela_saida
-  formato: delta
-  particao: null
+version: 1.0.0
+creation_date: '2025-08-03 14:42:40'
+name: project_name
+description: My Example Contract
+owner_email: my@email.com
+output_table:
+  name: catalog.schema.output_table_name
+  format: delta
+  partition: null
   path: null
-  colunas:
-  - nome: coluna1
-    tipo: string
-    eh_nulo: false
-    eh_unico: true
-  - nome: coluna2
-    tipo: int
-    eh_nulo: false
-    eh_unico: false
-  - nome: coluna3
-    tipo: double
-    precisao: 10, 15
-    eh_nulo: true
-    eh_unico: false
-  - nome: coluna 3
-    tipo: date
-    eh_nulo: false
-    eh_unico: false
+  columns:
+  - name: column1
+    type: string
+    is_nullable: false
+    is_unique: true
+  - name: column2
+    type: int
+    is_nullable: false
+    is_unique: false
+  - name: column3
+    type: double
+    precision: 10, 15
+    is_nullable: true
+    is_unique: false
+  - name: column 3
+    type: date
+    is_nullable: false
+    is_unique: false
 ```
-### É possível ter mais de um contrato de dados por projeto?
-Sim. A ideia é que você crie 1 contrato de dados para cada saída que o seu projeto vá gerar.
+### Is it possible to have more than one data contract per project?
+Yes. The idea is that you create one data contract for each output your project will generate.
 
-### É possível ter contratos de dados para as entradas?
-Sim. Contudo, recomendo que avalie se vale realmente a pena criar contratos para as entradas. Prefira criá-los em situações de grande complexidade onde uma alteração inesperada nas entradas seria prejudicial para o processo.
+### Is it possible to have data contracts for inputs?
+Yes. However, I recommend evaluating whether it is really worth creating contracts for inputs. Prefer to create them in situations of great complexity where an unexpected change in the inputs would be detrimental to the process.
 
-### Eu posso adicionar mais parâmetros ao contrato após ser criado?
-Sim. Infelizmente isso ainda não foi implementado via CLI. Mas você pode editar o conteúdo do arquivo manualmente. Para que não haja incompatibilidade com as novas funcionalidades que serão lançadas recomendo que mantenha ao menos os parâmetros padrão, mas fique livre para adicionar o que achar necessário.
+### Can I add more parameters to the contract after it is created?
+Yes. Unfortunately, this has not yet been implemented via CLI. But you can edit the file content manually. To avoid incompatibility with new features that will be released, I recommend keeping at least the standard parameters, but feel free to add whatever you find necessary.
 
-## Mais informações sobre o Hari
-Para descobrir outras opções, você pode utilizar a flag `--help`
+## More information about Hari
+To discover other options, you can use the `--help` flag
 ```bash
 poetry run hari --help
 ```
@@ -126,8 +126,8 @@ poetry run hari --help
 │ --help                        Show this message and exit.                                                                                                                                                                                                                                                 │
 ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ Commands ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ projeto    Gerencia projetos Hari                                                                                                                                                                                                                                                                         │
-│ contrato   Gerencia contratos Hari                                                                                                                                                                                                                                                                        │
+│ project    Manage Hari projects                                                                                                                                                                                                                                                                           │
+│ contract   Manage Hari contracts                                                                                                                                                                                                                                                                          │
 ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 ```
