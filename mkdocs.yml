@@ -5,7 +5,7 @@ edit_uri: tree/master/docs
 
 theme:
   name: material
-  language: pt-BR
+  language: en-US
   logo: assets/logo.png
   favicon: assets/logo.png
   palette:
