@@ -75,7 +75,7 @@ def main(
     console.print(message)
 
 
-@app.command('create')
+@app.command('create', help='Create a new project.')
 def app_create_project(
     project_name: str = Argument(..., help='Name of the project to create.')
 ) -> None:

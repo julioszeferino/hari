@@ -1,108 +1,154 @@
 ![project_logo](assets/logo.png){ width="300" .center }
 # Hari
-Hari is a Python library that helps automate several common data engineering tasks in PySpark environments. The library provides functions related to ingestion, loading, management, and data quality in data lakehouse environments with PySpark, and proposes a development model based on coding standards and data contracts.
+Hari is a Python library designed to establish a standardized pattern for developing PySpark applications, leveraging the concept of "data contracts" to ensure consistency, reliability, and maintainability in data engineering workflows.
 
-It has two basic commands: `project` and `contract`
+All application operations are based on the `hari` command. This command has a subcommand for each action the application can perform, such as `create` and `contract`.
 
 ## How to create a new Hari project?
 You can create a new project via the command line. For example:
 ```bash
-poetry run hari project new project_name
+hari create project_name
 ```
-Returning a list with the directories and files that were created.
+This command create a directory `project_name` and print this message:
 
-```
-           Created Directories and Files            
-┏━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Type      ┃ Name                                 ┃
-┡━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ Directory │ project_name/configs                 │
-│ Directory │ project_name/utils                   │
-│ File      │ project_name/configs/configs.json    │
-│ File      │ project_name/utils/helpers.py        │
-│ File      │ project_name/utils/validators.py     │
-│ File      │ project_name/job.py                  │
-│ File      │ project_name/README.md               │
-└───────────┴──────────────────────────────────────┘
-Project "project_name" created successfully!
-Happy Coding!
+```bash
+          Directories and Files Created          
+┏━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Type      ┃ Name                              ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ Directory │ project_name/configs              │
+│ Directory │ project_name/utils                │
+│ File      │ project_name/configs/configs.yaml │
+│ File      │ project_name/utils/helpers.py     │
+│ File      │ project_name/utils/validators.py  │
+│ File      │ project_name/job.py               │
+│ File      │ project_name/README.md            │
+└───────────┴───────────────────────────────────┘
+
+Project project_name created successfully!
+Happy coding! 🚀
 ```
 ## How to create a new Data Contract?
-Data contracts are one of the main features of the Hari library. You can create a new contract via the command line. For example:
+Data contracts are one of the main features of the Hari library. To create a new contract, you must be inside a Hari project directory.
+
+Run the following command:
 ```bash
-poetry run hari contract new project_name
+hari contract new contract_name
 ```
-Returning a series of questions about the data contract to be created.
+
+You will be prompted for the following information:
+- **Description** (optional): A description for your contract.
+- **Owner email** (optional): The email of the contract owner.
+- **Output table name**: Name of the output table (e.g., table_name, file_name).
+- **Output table format**: Format of the output table (e.g., parquet, csv).
+- **Output table path**: Path or URI for the output table.
+- **Columns**: You will be able to add one or more columns, specifying name, type, nullability, uniqueness, and optionally size/precision.
+- **Partitions**: Optionally, select columns to use as partitions.
+- **SLA**: Optionally, add SLA details such as update frequency and tolerance.
+
+Example session:
 ```bash
-Enter contract data:
-Contract description (press enter to skip) []: My Example Contract
-Output table name (e.g.: uri_catalog, file_name): catalog.schema.output_table_name
-Output table format (e.g.: parquet, csv): delta
-Do you want to add a column to table catalog.schema.output_table_name? [Y/n]: Y
-Column name: column1
-Column type (e.g.: string, int, double): string
+$ hari contract new sales_contract
+Description of the contract (optional): Sales data contract
+Email of the contract owner (optional): user@email.com
+Name of the output table (e.g., table_name, file_name): sales.daily
+Format of the output table (e.g., parquet, csv): parquet
+Path of the output table (e.g., uri_catalog, local_path): /data/sales
+Do you want to add a column? [Y/n]: Y
+Column name: sale_id
+Column type (e.g., string, int, double): int
 Can the column be null? [Y/n]: n
 Are the column values unique? [y/N]: y
-Do you want to add a column to table catalog.schema.output_table_name? [y/N]: y
-Column name: column2
-Column type (e.g.: string, int, double): int
-Can the column be null? [Y/n]: n
-Are the column values unique? [y/N]: n
-Do you want to add a column to table catalog.schema.output_table_name? [y/N]: y
-Column name: column3
-Column type (e.g.: string, int, double): double
-Column size (e.g.: 10, 20) or press enter to skip: 10, 15
-Can the column be null? [Y/n]: y
-Are the column values unique? [y/N]: n
-Do you want to add a column to table catalog.schema.output_table_name? [y/N]: y
-Column name: column 3
-Column type (e.g.: string, int, double): date
-Can the column be null? [Y/n]: n
-Are the column values unique? [y/N]: n
-Do you want to add a column to table catalog.schema.output_table_name? [y/N]: n
+# ...repeat for more columns...
 Do you want to add partition columns? [y/N]: y
-Choose a column for partitioning (or press Enter to finish) [column1/column2/column3/column 3] (): column2
-Column 'column2' added as partition.
+Choose a column for partitioning (or press Enter to finish): sale_id
 Do you want to add another partition column? [y/N]: n
-Selected columns: column2
-Contract owner email (press enter to skip) []: my@email.com
-Do you want to add SLA to the contract? [y/N]: y
-Update frequency (e.g.: daily, weekly, monthly): daily
-SLA tolerance (e.g.: 1 hour, 30 minutes): 1 hour
-Processing contract:
-Saving contract:
+Do you want to add SLA details? [y/N]: y
+Frequency of updates (e.g., daily, weekly, monthly): daily
+Tolerance for SLA (e.g., 1 hour, 30 minutes): 1 hour
+Proceeding to create the contract...
+Saving contract data to YAML file...
+Contract sales_contract created successfully!
+Happy coding! 🚀
 ```
-Finally, a file will be created with the following model:
+
+Example session with interactive prompts:
+```bash
+$ hari contract new sales_contract
+Description of the contract (optional): Sales data contract
+Email of the contract owner (optional): user@email.com
+Name of the output table (e.g., table_name, file_name): sales.daily
+Format of the output table (e.g., parquet, csv): parquet
+Path of the output table (e.g., uri_catalog, local_path): /data/sales
+
+Do you want to add a column? [Y/n]: Y
+Column name: sale_id
+Column type (e.g., string, int, double): int
+Can the column be null? [Y/n]: n
+Are the column values unique? [y/N]: y
+
+Do you want to add a column? [y/N]: y
+Column name: sale_date
+Column type (e.g., string, int, double): date
+Can the column be null? [Y/n]: n
+Are the column values unique? [y/N]: n
+
+Do you want to add partition columns? [y/N]: y
+Choose a column for partitioning (or press Enter to finish): sale_date
+Do you want to add another partition column? [y/N]: n
+
+Do you want to add SLA details? [y/N]: y
+Frequency of updates (e.g., daily, weekly, monthly): daily
+Tolerance for SLA (e.g., 1 hour, 30 minutes): 1 hour
+
+Proceeding to create the contract...
+Saving contract data to YAML file...
+Contract sales_contract created successfully!
+Happy coding! 🚀
+```
+
+You can also use command-line options to provide values directly, skipping the interactive prompts. For example:
+
+```bash
+hari contract new sales_contract \
+  --description "Sales data contract" \
+  --owner-email "user@email.com" \
+  --output-table-name "sales.daily" \
+  --output-table-format parquet \
+  --output-table-path "/data/sales"
+```
+
+If you provide all required options, the command will not prompt for those values interactively. You will still be prompted for columns, partitions, and SLA unless you provide those through additional options (if supported).
+
+The contract will be saved as a YAML file in the `contracts` directory of your project.
+
+Example of a generated contract YAML file:
 ```yaml
 version: 1.0.0
-creation_date: '2025-08-03 14:42:40'
-name: project_name
-description: My Example Contract
-owner_email: my@email.com
+creation_date: '2025-08-03'
+name: sales_contract
+description: Sales data contract
+owner_email: user@email.com
 output_table:
-  name: catalog.schema.output_table_name
-  format: delta
-  partition: null
-  path: null
+  name: sales.daily
+  format: parquet
+  path: /data/sales
+  partitioned_by:
+    - sale_date
   columns:
-  - name: column1
-    type: string
-    is_nullable: false
-    is_unique: true
-  - name: column2
-    type: int
-    is_nullable: false
-    is_unique: false
-  - name: column3
-    type: double
-    precision: 10, 15
-    is_nullable: true
-    is_unique: false
-  - name: column 3
-    type: date
-    is_nullable: false
-    is_unique: false
+    - name: sale_id
+      type: int
+      is_nullable: false
+      is_unique: true
+    - name: sale_date
+      type: date
+      is_nullable: false
+      is_unique: false
+sla:
+  frequency: daily
+  tolerance: 1 hour
 ```
+
 ### Is it possible to have more than one data contract per project?
 Yes. The idea is that you create one data contract for each output your project will generate.
 
@@ -115,19 +161,13 @@ Yes. Unfortunately, this has not yet been implemented via CLI. But you can edit 
 ## More information about Hari
 To discover other options, you can use the `--help` flag
 ```bash
-poetry run hari --help
+hari --help
 ```
 ```bash
- Usage: hari [OPTIONS] COMMAND [ARGS]...                                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                                                                             
-╭─ Options ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --install-completion          Install completion for the current shell.                                                                                                                                                                                                                                   │
-│ --show-completion             Show completion for the current shell, to copy it or customize the installation.                                                                                                                                                                                            │
-│ --help                        Show this message and exit.                                                                                                                                                                                                                                                 │
-╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Commands ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ project    Manage Hari projects                                                                                                                                                                                                                                                                           │
-│ contract   Manage Hari contracts                                                                                                                                                                                                                                                                          │
-╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+ Usage: hari [OPTIONS] COMMAND [ARGS]...         
 
+╭─ Commands ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ create     Create a new project.                                                                                                                                                                                                                    │
+│ contract   Manage data contracts.                                                                                                                                                                                                                   │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
