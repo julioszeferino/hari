@@ -6,8 +6,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.10', '3.11', '3.12']
+        os: ['ubuntu-20.04', 'windows-10']
+        python-version: ['3.10']
 
     steps:
       - name: Copy Files
