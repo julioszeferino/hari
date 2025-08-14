@@ -10,7 +10,7 @@ requires-python = ">=3.12,<4.0"
 dependencies = [
     "typer (>=0.16.0,<0.17.0)",
     "rich (>=14.1.0,<15.0.0)",
-    pyyaml = "^6.0.2",
+    "pyyaml (>=6.0.2,<7.0.0)"
 ]
 
 
