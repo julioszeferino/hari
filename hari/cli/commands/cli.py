@@ -107,9 +107,7 @@ def add_columns() -> List[Dict[str, str]]:
             break
         column = {}
         column['name'] = prompt('Column name')
-        column['type'] = prompt(
-            'Column type (e.g., string, int, double)'
-        )
+        column['type'] = prompt('Column type (e.g., string, int, double)')
         if column['type'] not in spark_type_options:
             console.print(f"[red]Invalid type '{column['type']}'.")
             console.print(
