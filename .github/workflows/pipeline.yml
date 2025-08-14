@@ -3,11 +3,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: ['ubuntu-20.04', 'windows-10']
-        python-version: ['3.10']
+    runs-on: 'ubuntu-latest'
 
     steps:
       - name: Copy Files
@@ -16,7 +12,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.12'
         
       - name: Install Dependencies
         run: |
