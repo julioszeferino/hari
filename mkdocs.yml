@@ -5,7 +5,6 @@ edit_uri: tree/master/docs
 
 theme:
   name: material
-  language: en-US
   logo: assets/logo.png
   favicon: assets/logo.png
   palette:
@@ -21,9 +20,10 @@ extra_css:
   - stylesheets/extra.css
 
 plugins: 
+  - search
   - mkdocstrings:
       handlers:
         python:
-          paths: 
-            - hari
-            - hari/cli/commands
+          paths: [hari]
+          options:
+            show_root_heading: true

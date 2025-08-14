@@ -1,1 +1,1 @@
-::: project
+::: cli.commands.project
