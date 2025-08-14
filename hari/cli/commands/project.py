@@ -1,3 +1,7 @@
+"""
+Module for creating a new Hari project structure.
+"""
+
 import os
 from typing import Dict, List
 
@@ -16,16 +20,18 @@ def project(project_name: str) -> Dict[str, List[str]]:
     """
     Create a new project structure with the given name.
 
-    Args:
+    Parameters:
         project_name (str): The name of the project.
 
     Returns:
-        A dictionary containing created directories and files.
+        Dict[str, List[str]]: A dictionary containing the created
+            directories and files.
 
     Raises:
         FileNotFoundError: If the template directory does not exist.
         PermissionError: If there are permission issues while creating
             files or directories.
+        Exception: For any other unexpected errors.
 
     Examples:
         >>> project("my_project") # doctest: +SKIP
