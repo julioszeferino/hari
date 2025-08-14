@@ -106,9 +106,9 @@ def add_columns() -> List[Dict[str, str]]:
         if not add_column:
             break
         column = {}
-        column['name'] = prompt('Column name', size=50)
+        column['name'] = prompt('Column name')
         column['type'] = prompt(
-            'Column type (e.g., string, int, double)', size=20
+            'Column type (e.g., string, int, double)'
         )
         if column['type'] not in spark_type_options:
             console.print(f"[red]Invalid type '{column['type']}'.")
@@ -184,6 +184,7 @@ def app_contract_new(
         add_partitions = confirm(
             'Do you want to add partition columns?', default=False
         )
+        # TODO: Add validation for choice column not existing in output_table_columns
         if add_partitions:
             partition_columns = []
             available_columns = [col['name'] for col in output_table_columns]

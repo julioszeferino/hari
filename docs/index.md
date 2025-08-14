@@ -1,14 +1,22 @@
 ![project_logo](assets/logo.png){ width="300" .center }
 # Hari
+
 Hari is a Python library designed to establish a standardized pattern for developing PySpark applications, leveraging the concept of "data contracts" to ensure consistency, reliability, and maintainability in data engineering workflows.
 
 All application operations are based on the `hari` command. This command has a subcommand for each action the application can perform, such as `create` and `contract`.
 
+{% include "templates/cards.html" %}
+
+{% include "templates/install.md" %}
+
 ## How to create a new Hari project?
+
 You can create a new project via the command line. For example:
+
 ```bash
-hari create project_name
+{{ commands.run }} create project_name
 ```
+
 This command create a directory `project_name` and print this message:
 
 ```bash
@@ -28,15 +36,19 @@ This command create a directory `project_name` and print this message:
 Project project_name created successfully!
 Happy coding! 🚀
 ```
+
 ## How to create a new Data Contract?
+
 Data contracts are one of the main features of the Hari library. To create a new contract, you must be inside a Hari project directory.
 
 Run the following command:
+
 ```bash
-hari contract new contract_name
+{{ commands.run }} contract new contract_name
 ```
 
 You will be prompted for the following information:
+
 - **Description** (optional): A description for your contract.
 - **Owner email** (optional): The email of the contract owner.
 - **Output table name**: Name of the output table (e.g., table_name, file_name).
@@ -47,8 +59,9 @@ You will be prompted for the following information:
 - **SLA**: Optionally, add SLA details such as update frequency and tolerance.
 
 Example session:
+
 ```bash
-$ hari contract new sales_contract
+$ {{ commands.run }} contract new sales_contract
 Description of the contract (optional): Sales data contract
 Email of the contract owner (optional): user@email.com
 Name of the output table (e.g., table_name, file_name): sales.daily
@@ -73,8 +86,9 @@ Happy coding! 🚀
 ```
 
 Example session with interactive prompts:
+
 ```bash
-$ hari contract new sales_contract
+$ {{ commands.run }} contract new sales_contract
 Description of the contract (optional): Sales data contract
 Email of the contract owner (optional): user@email.com
 Name of the output table (e.g., table_name, file_name): sales.daily
@@ -110,7 +124,7 @@ Happy coding! 🚀
 You can also use command-line options to provide values directly, skipping the interactive prompts. For example:
 
 ```bash
-hari contract new sales_contract \
+{{ commands.run }} contract new sales_contract \
   --description "Sales data contract" \
   --owner-email "user@email.com" \
   --output-table-name "sales.daily" \
@@ -123,6 +137,7 @@ If you provide all required options, the command will not prompt for those value
 The contract will be saved as a YAML file in the `contracts` directory of your project.
 
 Example of a generated contract YAML file:
+
 ```yaml
 version: 1.0.0
 creation_date: '2025-08-03'
@@ -150,18 +165,23 @@ sla:
 ```
 
 ### Is it possible to have more than one data contract per project?
+
 Yes. The idea is that you create one data contract for each output your project will generate.
 
 ### Is it possible to have data contracts for inputs?
+
 Yes. However, I recommend evaluating whether it is really worth creating contracts for inputs. Prefer to create them in situations of great complexity where an unexpected change in the inputs would be detrimental to the process.
 
 ### Can I add more parameters to the contract after it is created?
+
 Yes. Unfortunately, this has not yet been implemented via CLI. But you can edit the file content manually. To avoid incompatibility with new features that will be released, I recommend keeping at least the standard parameters, but feel free to add whatever you find necessary.
 
 ## More information about Hari
+
 To discover other options, you can use the `--help` flag
+
 ```bash
-hari --help
+{{ commands.run }} --help
 ```
 ```bash
  Usage: hari [OPTIONS] COMMAND [ARGS]...         
