@@ -21,7 +21,6 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.emoji
 
 extra_css:
@@ -40,5 +39,6 @@ plugins:
 extra:
   commands:
     run: poetry run hari
+extra:
   commands:
     run: poetry run hari
