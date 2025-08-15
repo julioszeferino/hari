@@ -17,7 +17,3 @@ build:
 
     post_install:
       - poetry install --only doc
-
-    pre_build:
-      - python -c 'import material, material.extensions.emoji as e; print("mkdocs-material:", getattr(material, "__version__", "n/a")); print("emoji ext OK:", e.__name__)'
-      - poetry show mkdocs-material mkdocs-material-extensions mkdocstrings mkdocstrings-python || true
