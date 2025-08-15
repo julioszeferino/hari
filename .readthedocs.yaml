@@ -13,7 +13,9 @@ build:
   jobs:
     post_create_environment:
       - pip install poetry
+      - pip install mkdocs-material
       - poetry config virtualenvs.create false
+      
 
     post_install:
       - poetry install --with doc
