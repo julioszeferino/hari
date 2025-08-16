@@ -6,12 +6,40 @@ authors = [
     {name = "Julio Zeferino",email = "julioszeferino@gmail.com"}
 ]
 readme = "README.md"
+packages = [{include = "hari"}]
+classifiers = [
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Utilities",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Database :: Data Warehousing",
+    "Topic :: System :: Distributed Computing",
+
+    "Environment :: Console",
+    "Environment :: Plugins",
+
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+
+    "Natural Language :: English",
+    "Development Status :: 5 - Production/Stable",
+
+    "Programming Language :: Python :: 3.11"
+]
+
+
 requires-python = ">=3.11,<4.0"
 dependencies = [
     "typer (>=0.16.0,<0.17.0)",
     "rich (>=14.1.0,<15.0.0)",
     "pyyaml (>=6.0.2,<7.0.0)"
 ]
+
+[tool.poetry.urls]
+"Documentation" = "https://hari-data.readthedocs.io/en/latest/"
+"Source Code" = "https://github.com/julioszeferino/hari"
+"Bug Tracker" = "https://github.com/julioszeferino/hari/issues"
+"Donation" = "https://hari-data.readthedocs.io/en/latest/"
 
 
 [build-system]
@@ -55,4 +83,3 @@ docs = "mkdocs serve"
 pre_test = "task lint"
 test = "pytest -s -x --cov=hari --cov-report=term-missing -vv"
 post_test = "coverage html"
-

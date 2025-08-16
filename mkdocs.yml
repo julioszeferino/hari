@@ -42,7 +42,4 @@ plugins:
 
 extra:
   commands:
-    run: poetry run hari
-extra:
-  commands:
-    run: poetry run hari
+    run: hari
