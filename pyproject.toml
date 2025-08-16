@@ -1,10 +1,11 @@
 [project]
 name = "hari"
 version = "0.1.0"
-description = ""
+description = "Hari is a Python library designed to establish a standardized pattern for developing PySpark applications, leveraging the concept of "data contracts" to ensure consistency, reliability, and maintainability in data engineering workflows."
 authors = [
     {name = "Julio Zeferino",email = "julioszeferino@gmail.com"}
 ]
+license="MIT"
 readme = "README.md"
 packages = [{include = "hari"}]
 classifiers = [
