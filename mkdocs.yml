@@ -42,4 +42,4 @@ plugins:
 
 extra:
   commands:
-    run: hari
+    run: hari-data

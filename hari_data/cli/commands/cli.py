@@ -6,10 +6,10 @@ from rich.prompt import Prompt
 from rich.table import Table
 from typer import Argument, Context, Exit, Option, Typer, confirm, prompt
 
-from hari import __version__
-from hari.cli.commands.contract import contract
-from hari.cli.commands.project import project
-from hari.utils.helpers import create_yaml_from_dict, is_hari_project
+from hari_data import __version__
+from hari_data.cli.commands.contract import contract
+from hari_data.cli.commands.project import project
+from hari_data.utils.helpers import create_yaml_from_dict, is_hari_project
 
 console = Console()
 app = Typer()

@@ -2,7 +2,7 @@ import os
 
 import yaml
 
-from hari.utils.helpers import create_yaml_from_dict, is_hari_project
+from hari_data.utils.helpers import create_yaml_from_dict, is_hari_project
 
 
 def test_is_hari_project_true(tmp_path, monkeypatch):

@@ -5,7 +5,7 @@ Module for creating a new Hari project structure.
 import os
 from typing import Dict, List
 
-from hari import __version__
+from hari_data import __version__
 
 DIRECTORIES_FILES = {
     'configs': ['configs.yaml'],
@@ -13,7 +13,7 @@ DIRECTORIES_FILES = {
     '.': ['job.py', 'README.md'],
 }
 
-TEMPLATES_DIR = './hari/cli/templates'
+TEMPLATES_DIR = './hari_data/cli/templates'
 
 
 def project(project_name: str) -> Dict[str, List[str]]:

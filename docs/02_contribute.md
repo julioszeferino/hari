@@ -51,7 +51,7 @@ For rich outputs in the application, the [Rich](https://rich.readthedocs.io/en/s
 
 The only convention being followed regarding the CLI is that a `Console` object from Rich and a `Typer` app have already been defined. It would be best to continue using these objects.
 
-```py title="hari/cli/commands/cli.py"
+```py title="hari_data/cli/commands/cli.py"
 from rich.console import Console
 from typer import Argument, Typer
 
@@ -65,7 +65,7 @@ app = Typer()
 
 For testing, we use [pytest](https://docs.pytest.org/). Its configuration can be found in the [pyproject.toml](https://github.com/julioszeferino/hari/blob/master/pyproject.toml) file at the root of the project.
 
-Important things to know about the tests: not all tests are only in the `hari/tests` directory. The `addopts = "--doctest-modules"` flag is used. So, if you modify something, be aware that docstrings also run tests and are the basis for API documentation, so be careful with changes.
+Important things to know about the tests: not all tests are only in the `hari_data/tests` directory. The `addopts = "--doctest-modules"` flag is used. So, if you modify something, be aware that docstrings also run tests and are the basis for API documentation, so be careful with changes.
 
 If you want to skip a test, just use the flag `# doctest: +SKIP`.
 

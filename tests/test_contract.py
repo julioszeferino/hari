@@ -1,4 +1,4 @@
-from hari.cli.commands.contract import contract
+from hari_data.cli.commands.contract import contract
 
 
 def test_contract_basic_params():

@@ -2,7 +2,7 @@ import re
 
 from typer.testing import CliRunner
 
-from hari.cli.commands.cli import add_columns, app
+from hari_data.cli.commands.cli import add_columns, app
 
 runner = CliRunner()
 
@@ -18,7 +18,7 @@ def test_version_callback(monkeypatch):
     Test hari --version
     """
     # ---- Arrange / Act ----
-    monkeypatch.setattr('hari.cli.commands.cli.__version__', '1.0.0')
+    monkeypatch.setattr('hari_data.cli.commands.cli.__version__', '1.0.0')
     result = runner.invoke(app, ['--version'], env={'NO_COLOR': '1'})
 
     # ---- Assert ----
@@ -33,7 +33,9 @@ def test_callback_no_flag(mocker):
     Test hari without --version flag
     """
     # ---- Arrange / Act ----
-    mocker.patch('hari.cli.commands.cli.version_callback', return_value=None)
+    mocker.patch(
+        'hari_data.cli.commands.cli.version_callback', return_value=None
+    )
     result = runner.invoke(app, [], env={'NO_COLOR': '1'})
 
     # ---- Assert ----
@@ -49,7 +51,7 @@ def test_create_project_success(mocker):
     """
     # ---- Arrange ----
     # change the return value of the function project
-    mock_func_project = mocker.patch('hari.cli.commands.cli.project')
+    mock_func_project = mocker.patch('hari_data.cli.commands.cli.project')
     mock_func_project.return_value = {
         'dirs_created': ['configs', 'utils'],
         'files_created': ['job.py', 'README.md'],
@@ -85,7 +87,7 @@ def test_add_columns_no_columns(mocker):
     # in first prompt, but wanting to add in second
     # question and the next questions recursively
     mocker.patch(
-        'hari.cli.commands.cli.confirm',
+        'hari_data.cli.commands.cli.confirm',
         side_effect=[
             False,  # No to add columns
             True,  # Yes to add columns
@@ -96,14 +98,14 @@ def test_add_columns_no_columns(mocker):
     )
     # simulate the user adding a column
     mocker.patch(
-        'hari.cli.commands.cli.prompt',
+        'hari_data.cli.commands.cli.prompt',
         side_effect=[
             'col1',  # Column name
             'string',  # Column type
         ],
     )
     # desactivate the console print
-    mocker.patch('hari.cli.commands.cli.console.print')
+    mocker.patch('hari_data.cli.commands.cli.console.print')
 
     columns_expected = [
         {
@@ -125,7 +127,7 @@ def test_add_columns_type_invalid(mocker):
     # ---- Arrange ----
     # simulate the user wanting to add a column
     mocker.patch(
-        'hari.cli.commands.cli.confirm',
+        'hari_data.cli.commands.cli.confirm',
         side_effect=[
             True,  # Yes to add columns
             True,  # Yes to add columns sec try
@@ -137,7 +139,7 @@ def test_add_columns_type_invalid(mocker):
     # simulate to add a column with float type
     # simulate the user adding a column
     mocker.patch(
-        'hari.cli.commands.cli.prompt',
+        'hari_data.cli.commands.cli.prompt',
         side_effect=[
             'col1',  # Column name
             'invalid_type',  # Column type
@@ -146,7 +148,7 @@ def test_add_columns_type_invalid(mocker):
         ],
     )
     # desactivate the console print
-    mocker.patch('hari.cli.commands.cli.console.print')
+    mocker.patch('hari_data.cli.commands.cli.console.print')
 
     columns_expected = [
         {
@@ -185,7 +187,9 @@ def test_add_contract_outside_hari_project(mocker):
         '',
     ]
     # change the return value of the function is_hari_project
-    mocker.patch('hari.cli.commands.cli.is_hari_project', return_value=False)
+    mocker.patch(
+        'hari_data.cli.commands.cli.is_hari_project', return_value=False
+    )
 
     # ---- Act ----
     result = runner.invoke(app, args, env={'NO_COLOR': '1'})
@@ -214,10 +218,12 @@ def test_contract_new_happy_path_with_partitions(mocker):
         '',
     ]
     # simulate a happy path
-    mocker.patch('hari.cli.commands.cli.is_hari_project', return_value=True)
+    mocker.patch(
+        'hari_data.cli.commands.cli.is_hari_project', return_value=True
+    )
     # simulate columns addition
     mocker.patch(
-        'hari.cli.commands.cli.add_columns',
+        'hari_data.cli.commands.cli.add_columns',
         return_value=[
             {
                 'name': 'col1',
@@ -235,14 +241,14 @@ def test_contract_new_happy_path_with_partitions(mocker):
     )
     # simulate add partition
     mocker.patch(
-        'hari.cli.commands.cli.confirm',
+        'hari_data.cli.commands.cli.confirm',
         side_effect=[
             True,  # Add partition columns
         ],
     )
     # simulate a choice for partition column
     mocker.patch(
-        'hari.cli.commands.cli.Prompt.ask',
+        'hari_data.cli.commands.cli.Prompt.ask',
         side_effect=[
             'col1',  # Selected col1 for partition
             'col1',  # Try to add col1 again, should be ignored
@@ -250,12 +256,14 @@ def test_contract_new_happy_path_with_partitions(mocker):
         ],
     )
     # simulate the contract creation
-    mock_contract = mocker.patch('hari.cli.commands.cli.contract')
+    mock_contract = mocker.patch('hari_data.cli.commands.cli.contract')
     # simulate version
-    mocker.patch('hari.cli.commands.cli.__version__', return_value='0.1.1')
+    mocker.patch(
+        'hari_data.cli.commands.cli.__version__', return_value='0.1.1'
+    )
     # desactivate the console print
     mock_create_yaml = mocker.patch(
-        'hari.cli.commands.cli.create_yaml_from_dict'
+        'hari_data.cli.commands.cli.create_yaml_from_dict'
     )
 
     # ---- Act ----
@@ -329,10 +337,12 @@ def test_contract_with_sla(mocker):
         '',
     ]
     # Simulate being inside a Hari project
-    mocker.patch('hari.cli.commands.cli.is_hari_project', return_value=True)
+    mocker.patch(
+        'hari_data.cli.commands.cli.is_hari_project', return_value=True
+    )
     # Simulate columns addition
     mocker.patch(
-        'hari.cli.commands.cli.add_columns',
+        'hari_data.cli.commands.cli.add_columns',
         return_value=[
             {
                 'name': 'col1',
@@ -344,26 +354,28 @@ def test_contract_with_sla(mocker):
     )
     # Simulate not adding partition columns
     mocker.patch(
-        'hari.cli.commands.cli.confirm',
+        'hari_data.cli.commands.cli.confirm',
         side_effect=[
             False,  # No to add partition columns
         ],
     )
     # Simulate SLA prompts
     mocker.patch(
-        'hari.cli.commands.cli.prompt',
+        'hari_data.cli.commands.cli.prompt',
         side_effect=[
             'daily',  # Frequency
             '1 hour',  # Tolerance
         ],
     )
     # Simulate contract creation
-    mock_contract = mocker.patch('hari.cli.commands.cli.contract')
+    mock_contract = mocker.patch('hari_data.cli.commands.cli.contract')
     # Simulate version
-    mocker.patch('hari.cli.commands.cli.__version__', return_value='0.1.1')
+    mocker.patch(
+        'hari_data.cli.commands.cli.__version__', return_value='0.1.1'
+    )
     # Disable console print
     mock_create_yaml = mocker.patch(
-        'hari.cli.commands.cli.create_yaml_from_dict'
+        'hari_data.cli.commands.cli.create_yaml_from_dict'
     )
 
     # ---- Act ----

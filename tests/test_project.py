@@ -3,7 +3,7 @@ import shutil
 
 import pytest
 
-from hari.cli.commands.project import (
+from hari_data.cli.commands.project import (
     TEMPLATES_DIR,
     project,
 )
@@ -34,7 +34,7 @@ def test_project_structure(tmp_dir_shared, monkeypatch):
     os.chdir(tmp_dir_shared)
     # change the TEMPLATES_DIR variable
     monkeypatch.setattr(
-        'hari.cli.commands.project.TEMPLATES_DIR',
+        'hari_data.cli.commands.project.TEMPLATES_DIR',
         f'{tmp_dir_shared}/templates',
     )
     project_name = 'test_project'
@@ -62,7 +62,7 @@ def test_file_not_found_error(tmp_dir_shared, monkeypatch):
     os.chdir(tmp_dir_shared)
     # change the TEMPLATES_DIR variable to a non-existent dir
     monkeypatch.setattr(
-        'hari.cli.commands.project.TEMPLATES_DIR',
+        'hari_data.cli.commands.project.TEMPLATES_DIR',
         f'{tmp_dir_shared}/non_existent_dir',
     )
     project_name = 'test_project'
@@ -78,7 +78,7 @@ def test_permission_error(tmp_dir_shared, monkeypatch):
     os.chdir(tmp_dir_shared)
     # change the TEMPLATES_DIR variable
     monkeypatch.setattr(
-        'hari.cli.commands.project.TEMPLATES_DIR',
+        'hari_data.cli.commands.project.TEMPLATES_DIR',
         f'{tmp_dir_shared}/templates',
     )
     project_name = 'test_project'
@@ -99,14 +99,14 @@ def test_generic_error(tmp_dir_shared, monkeypatch):
     os.chdir(tmp_dir_shared)
     # change the TEMPLATES_DIR variable
     monkeypatch.setattr(
-        'hari.cli.commands.project.TEMPLATES_DIR',
+        'hari_data.cli.commands.project.TEMPLATES_DIR',
         f'{tmp_dir_shared}/templates',
     )
     project_name = 'test_project'
     # change a function os.path.join in the module
     # project() to raise a generic exception
     monkeypatch.setattr(
-        'hari.cli.commands.project.os.path.join',
+        'hari_data.cli.commands.project.os.path.join',
         _generic_exception,
     )
     # ---- Act / Assert ----
