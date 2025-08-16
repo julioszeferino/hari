@@ -1,7 +1,7 @@
 [project]
 name = "hari"
 version = "0.1.0"
-description = "Hari is a Python library designed to establish a standardized pattern for developing PySpark applications, leveraging the concept of "data contracts" to ensure consistency, reliability, and maintainability in data engineering workflows."
+description = 'Hari is a Python library designed to establish a standardized pattern for developing PySpark applications, leveraging the concept of "data contracts" to ensure consistency, reliability, and maintainability in data engineering workflows.'
 authors = [
     {name = "Julio Zeferino",email = "julioszeferino@gmail.com"}
 ]
@@ -15,16 +15,12 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Database :: Data Warehousing",
     "Topic :: System :: Distributed Computing",
-
     "Environment :: Console",
     "Environment :: Plugins",
-
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
-
     "Natural Language :: English",
     "Development Status :: 5 - Production/Stable",
-
     "Programming Language :: Python :: 3.11"
 ]
 
