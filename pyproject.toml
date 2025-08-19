@@ -7,13 +7,14 @@ authors = [
 ]
 license="MIT"
 readme = "README.md"
-packages = [{include = "hari_data"}]
+packages = [
+    {include = "hari_data"}
+]
 classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Utilities",
     "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Database :: Data Warehousing",
     "Topic :: System :: Distributed Computing",
     "Environment :: Console",
     "Environment :: Plugins",
