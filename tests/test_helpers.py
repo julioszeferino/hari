@@ -1,5 +1,6 @@
 import os
 
+import pytest
 import yaml
 
 from hari_data.utils.helpers import create_yaml_from_dict, is_hari_project
@@ -45,3 +46,37 @@ def test_create_yaml_from_dict_creates_dir(tmp_path):
     # Assert
     assert os.path.isdir(dir_name)
     assert os.path.isfile(dir_name / f'{file_name}.yaml')
+
+
+def test_create_yaml_from_dict_raises_oserror(monkeypatch):
+    # Simulate OSError when creating directory
+    def raise_oserror(*args, **kwargs):
+        raise OSError('Cannot create directory')
+
+    monkeypatch.setattr(os, 'makedirs', raise_oserror)
+    with pytest.raises(
+        OSError, match='Error creating YAML file: Cannot create directory'
+    ):
+        from hari_data.utils.helpers import create_yaml_from_dict
+
+        create_yaml_from_dict({}, '/nonexistent_dir', 'file')
+
+
+def test_create_yaml_from_dict_raises_yamlerror(monkeypatch, tmp_path):
+    # Simula erro do yaml.dump para garantir cobertura do except yaml.YAMLError
+    dir_name = tmp_path / 'errordir'
+    dir_name.mkdir()
+    # Patch yaml.dump no namespace correto
+    import hari_data.utils.helpers as helpers
+
+    monkeypatch.setattr(
+        helpers.yaml,
+        'dump',
+        lambda *a, **kw: (_ for _ in ()).throw(
+            yaml.YAMLError('YAML dump error')
+        ),
+    )
+    with pytest.raises(
+        yaml.YAMLError, match='Error writing YAML file: YAML dump error'
+    ):
+        helpers.create_yaml_from_dict({}, str(dir_name), 'file')
