@@ -39,13 +39,10 @@ def create_yaml_from_dict(data: dict, dir: str, file_name: str) -> None:
         OSError: If the directory cannot be created or written to.
         yaml.YAMLError: If there is an error in writing the YAML file.
     """
-
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
-    file_dir = os.path.join(dir, f'{file_name}.yaml')
-
     try:
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        file_dir = os.path.join(dir, f'{file_name}.yaml')
         with open(file_dir, 'w') as file:
             yaml.dump(
                 data,
