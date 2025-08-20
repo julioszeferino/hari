@@ -25,3 +25,15 @@ class HariDirectoryCreationError(HariError):
 
     def __str__(self):
         return f'{self.message}\nTraceback:\n{self.tb}'
+
+
+class HariLoggerNotConfigured(HariError):
+    """Exception raised when the logger is not configured."""
+
+    def __init__(self, message: Optional[str] = None):
+        if message is None:
+            message = 'Logger has not been configured. Call the .configure() method first.'
+        super().__init__(message)
+
+    def __str__(self):
+        return self.message
