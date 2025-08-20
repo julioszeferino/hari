@@ -56,3 +56,31 @@ def create_yaml_from_dict(data: dict, dir: str, file_name: str) -> None:
         raise OSError(f'Error creating YAML file: {e}')
     except yaml.YAMLError as e:
         raise yaml.YAMLError(f'Error writing YAML file: {e}')
+
+
+def read_yaml_to_dict(file_path: str) -> dict:
+    """
+    Read a YAML file and convert its contents to a dictionary.
+
+    Parameters:
+        file_path (str): The path to the YAML file.
+
+    Returns:
+        dict: The contents of the YAML file as a dictionary.
+
+    Examples:
+        >>> read_yaml_to_dict('/path/to/file.yaml') # doctest: +SKIP
+        {'key': 'value'}
+
+    Raises:
+        FileNotFoundError: If the specified file does not exist.
+        yaml.YAMLError: If there is an error in reading the YAML file.
+    """
+    try:
+        with open(file_path, 'r') as file:
+            data = yaml.safe_load(file)
+            return data if data is not None else {}
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f'YAML file not found: {e}')
+    except yaml.YAMLError as e:
+        raise yaml.YAMLError(f'Error reading YAML file: {e}')
