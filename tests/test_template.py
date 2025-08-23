@@ -65,6 +65,8 @@ def test_hari_template_configs_get_text(monkeypatch):
         version: "1.0.0"
         job_name: ""
         job_description: ""
+        master_url: "local[*]" # e.g. 'local', 'yarn', 'k8s'
+        jars_path: "./jars"  # e.g. ./path/to/jars
         job_type: "batch"  # Options: 'batch', 'streaming'
         job_priority: "normal"  # Options: 'low', 'normal', 'high'
         job_timeout: 3600  # Timeout in seconds
