@@ -4,8 +4,8 @@ from typing import Dict, Optional
 from pyspark.sql import SparkSession
 
 from hari_data.session.hari.hari_spark_session import BaseHariSparkSession
-from hari_data.session.hari.hari_spark_session_local import (
-    HariSparkSessionLocal,
+from hari_data.session.hari.hari_spark_session_generic import (
+    HariSparkSessionGeneric,
 )
 from hari_data.utils.helpers import read_yaml_to_dict
 from hari_data.utils.logger import logger_manager
@@ -22,7 +22,7 @@ class HariSparkSessionManager:
     _lock: Lock = Lock()
 
     __factories: Dict[str, BaseHariSparkSession] = {
-        'local': HariSparkSessionLocal,
+        'local': HariSparkSessionGeneric,
     }
 
     def __new__(cls):

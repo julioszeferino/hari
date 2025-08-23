@@ -6,7 +6,7 @@ from pyspark.sql import SparkSession
 from hari_data.session.hari.hari_spark_session import BaseHariSparkSession
 
 
-class HariSparkSessionLocal(BaseHariSparkSession):
+class HariSparkSessionGeneric(BaseHariSparkSession):
     def __init__(
         self,
         app_name: str,
@@ -30,7 +30,7 @@ class HariSparkSessionLocal(BaseHariSparkSession):
 
         Examples:
 
-            >>> hari_spark_session_local = HariSparkSessionLocal( # doctest: +SKIP
+            >>> hari_spark_session_local = HariSparkSessionGeneric( # doctest: +SKIP
             ...     app_name='MyApp',
             ...     master_url='local[*]',
             ...     spark_log_level='INFO',
