@@ -1,8 +1,8 @@
 from pyspark.sql import SparkSession
 
 from hari_data.session.hari.hari_spark_session import BaseHariSparkSession
-from hari_data.session.hari.hari_spark_session_local import (
-    HariSparkSessionLocal,
+from hari_data.session.hari.hari_spark_session_generic import (
+    HariSparkSessionGeneric,
 )
 from hari_data.utils.logger import Logger
 
@@ -70,7 +70,7 @@ def test_get_spark_builder():
     assert builder._options['spark.executor.memory'] == '2g'
 
 
-# ---------- Tests for HariSparkSessionLocal ----------
+# ---------- Tests for HariSparkSessionGeneric ----------
 def test_hari_spark_local_super_init(monkeypatch):
     # ---- Arrange ----
     called = {}
@@ -93,8 +93,8 @@ def test_hari_spark_local_super_init(monkeypatch):
     )
 
     # ---- Act ----
-    # Create an instance of HariSparkSessionLocal but do not call __init__
-    result = HariSparkSessionLocal.__new__(HariSparkSessionLocal)
+    # Create an instance of HariSparkSessionGeneric but do not call __init__
+    result = HariSparkSessionGeneric.__new__(HariSparkSessionGeneric)
     # Call the patched __init__ method
     result.__init__(
         app_name='TestApp',
@@ -116,7 +116,7 @@ def test_hari_spark_local_get_spark_session(monkeypatch):
     master_url = 'local[*]'
     spark_log_level = 'INFO'
     jars_path = None
-    template = HariSparkSessionLocal(
+    template = HariSparkSessionGeneric(
         app_name=app_name,
         master_url=master_url,
         spark_log_level=spark_log_level,
@@ -151,7 +151,7 @@ def test_hari_spark_local_get_spark_session_with_errors(monkeypatch):
     master_url = 'local[*]'
     spark_log_level = 'INFO'
     jars_path = None
-    template = HariSparkSessionLocal(
+    template = HariSparkSessionGeneric(
         app_name=app_name,
         master_url=master_url,
         spark_log_level=spark_log_level,
