@@ -41,12 +41,6 @@ def test_manager_configure_with_configs_path(tmp_path):
 
 def test_manager_logs_are_not_configured(monkeypatch):
     # ---- Arrange ----
-    configs = {
-        'app_name': 'TestApp',
-        'master_url': 'local[*]',
-        'spark_log_level': 'INFO',
-        'jars_path': None,
-    }
     manager = HariSparkSessionManager()
     # Resetting instance for test isolation
     manager._instance = None
