@@ -1,6 +1,6 @@
 [project]
 name = "hari-data"
-version = "0.1.4"
+version = "0.1.5"
 description = 'Hari is a Python library designed to establish a standardized pattern for developing PySpark applications, leveraging the concept of "data contracts" to ensure consistency, reliability, and maintainability in data engineering workflows.'
 authors = [
     {name = "Julio Zeferino",email = "julioszeferino@gmail.com"}
