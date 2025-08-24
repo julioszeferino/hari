@@ -125,7 +125,7 @@ class HariSparkSessionManager:
         master_url = configs.get('master_url', master_url)
         jars_path = configs.get('jars_path', jars_path)
 
-        if not logger_manager.is_configured:
+        if not self._logger:
             logger_manager.configure(
                 app_name=app_name,
                 log_level=log_level,

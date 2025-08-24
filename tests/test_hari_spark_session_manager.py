@@ -37,3 +37,29 @@ def test_manager_configure_with_configs_path(tmp_path):
     # ---- Assert ----
     assert manager._spark_session is not None
     assert manager._logger is not None
+
+
+def test_manager_logs_are_not_configured(monkeypatch):
+    # ---- Arrange ----
+    configs = {
+        'app_name': 'TestApp',
+        'master_url': 'local[*]',
+        'spark_log_level': 'INFO',
+        'jars_path': None,
+    }
+    manager = HariSparkSessionManager()
+    # Resetting instance for test isolation
+    manager._instance = None
+    manager._spark_session = None
+    manager._logger = None
+
+    # ---- Act ----
+    manager.configure(
+        env='local',
+        configs_path=None,
+        app_name='TestApp',
+        master_url='local[*]',
+    )
+
+    # ---- Assert ----
+    assert manager._logger is not None
