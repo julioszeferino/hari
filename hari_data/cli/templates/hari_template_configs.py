@@ -14,6 +14,8 @@ class HariTemplateConfigs(HariTemplate):
         version: "{self.version}"
         job_name: ""
         job_description: ""
+        master_url: "local[*]" # e.g. 'local', 'yarn', 'k8s'
+        jars_path: "./jars"  # e.g. ./path/to/jars
         job_type: "batch"  # Options: 'batch', 'streaming'
         job_priority: "normal"  # Options: 'low', 'normal', 'high'
         job_timeout: 3600  # Timeout in seconds

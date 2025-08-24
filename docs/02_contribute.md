@@ -21,14 +21,20 @@ The project is divided into three directories: `docs`, `hari`, and `tests`. Each
 flowchart
 	. --> hari --> cli
 
+	hari --> cli
+	hari --> session
+
     cli --> commands
     cli --> templates
 
-    templates --> template_files
+    templates --> templates.py
 	
 	commands --> project.py
 	commands --> contract.py
 	commands --> cli.py
+
+	session --> hari_spark_session_manager.py
+	session --> hari --> hari_spark_session_templates.py
 ```
 
 The CLI code and the library are in `hari`. The API documentation is also being written in `hari`, using [mkdocstrings](https://mkdocstrings.github.io/) and following the [Google docstrings standard](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html). So, if you change anything in the code, remember to update the docstrings as well.
@@ -36,6 +42,10 @@ The CLI code and the library are in `hari`. The API documentation is also being 
 Some examples used in the docstrings are also used for tests. If you change the output format, remember to update the docstrings.
 
 The `templates` directory contains base files for creating the project structure pattern. The `commands` directory contains the actual code that builds the CLI.
+
+The `sessions` directory contains the code for managing Spark sessions. If you want to add new functionalities to the Spark session manager, you can do so in the `hari_spark_session_manager.py` file.
+
+The `session/hari` directory contains templates for creating Spark sessions. If you want to add new templates, you can do so in the `hari_spark_session_templates.py` file e. g., if you want to add a new template for a Spark session with Delta Lake support, you can add it there.
 
 #### About the library
 
